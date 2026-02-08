@@ -1,7 +1,5 @@
 # Benih Bibit - Backend API
 
-# Amazing Safari (Batch 7) - Backend API
-
 ## REST API Specification
 
 - Production: `https://benihbibit-api.bandomega.com`
