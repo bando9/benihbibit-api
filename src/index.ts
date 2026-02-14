@@ -2,6 +2,8 @@ import { logger } from "hono/logger";
 import { cors } from "hono/cors";
 import { Scalar } from "@scalar/hono-api-reference";
 import { OpenAPIHono } from "@hono/zod-openapi";
+import { helloRoutes } from "./moduls/common/routes";
+import { productRoutes } from "./moduls/products/routes";
 
 const app = new OpenAPIHono();
 
@@ -15,41 +17,9 @@ app.use(
   }),
 );
 
-app.openapi(
-  {
-    method: "get",
-    path: "/test",
-    description: "get hello",
-    responses: {
-      200: {
-        description: "Successfully get hello",
-      },
-    },
-  },
-
-  (c) => {
-    const text = "Hello Benih Bibit here!";
-    return c.json(text, 200);
-  },
-);
-
-app.openapi(
-  {
-    method: "get",
-    path: "/hello",
-    description: "get hello test",
-    responses: {
-      200: {
-        description: "Successfully get hello test",
-      },
-    },
-  },
-
-  (c) => {
-    const text = "Hello, test!";
-    return c.json(text, 200);
-  },
-);
+export const appRoutes = app
+  .route("/hello", helloRoutes)
+  .route("/produtcs", productRoutes);
 
 // API Docs
 app.doc("/openapi.json", {
