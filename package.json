@@ -6,11 +6,16 @@
   },
   "dependencies": {
     "@hono/zod-openapi": "^1.2.1",
+    "@prisma/adapter-pg": "^7.4.0",
+    "@prisma/client": "^7.4.0",
     "@scalar/hono-api-reference": "^0.9.40",
+    "dotenv": "^17.3.1",
     "hono": "^4.11.8",
+    "pg": "^8.18.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "prisma": "^7.4.0"
   }
 }
