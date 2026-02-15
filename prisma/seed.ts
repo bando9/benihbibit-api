@@ -11,7 +11,7 @@ async function main() {
       update: product,
     });
 
-    console.log(`💻 Laptop: ${upsertProduct.slug}`);
+    console.log(`🌱 Product: ${upsertProduct.name}`);
   }
 }
 
