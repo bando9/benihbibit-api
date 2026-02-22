@@ -11,6 +11,8 @@ export const ProductSchema = z.object({
   description: z.string(),
 });
 
+export const ProductsSchema = z.array(ProductSchema);
+
 export const GetProductParamSchema = z.object({
   slug: z
     .string()

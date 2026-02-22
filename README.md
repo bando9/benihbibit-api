@@ -1,4 +1,4 @@
-# Benih Bibit - Backend API
+# Benihbibit - Backend API
 
 ## REST API Specification
 
@@ -42,7 +42,7 @@ Setup database:
 
 ```sh
 # Run database only
-bun docker:up
+bun db:up
 ```
 
 Install dependencies:

@@ -2,8 +2,8 @@ import { logger } from "hono/logger";
 import { cors } from "hono/cors";
 import { Scalar } from "@scalar/hono-api-reference";
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { helloRoutes } from "./moduls/common/routes";
-import { productRoutes } from "./moduls/products/routes";
+import { helloRoutes } from "./modules/common/routes";
+import { productRoutes } from "./modules/products/routes";
 
 const app = new OpenAPIHono();
 
@@ -26,8 +26,8 @@ app.doc("/openapi.json", {
   openapi: "3.0.0",
   info: {
     version: "1.0.0",
-    title: "Benih Bibit API",
-    description: "-",
+    title: "Benihbibit API",
+    description: "Benihbibit is ....",
   },
 });
 
