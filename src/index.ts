@@ -19,7 +19,7 @@ app.use(
 
 export const appRoutes = app
   .route("/hello", helloRoutes)
-  .route("/produtcs", productRoutes);
+  .route("/products", productRoutes);
 
 // API Docs
 app.doc("/openapi.json", {
