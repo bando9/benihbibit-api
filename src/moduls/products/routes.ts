@@ -1,6 +1,6 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { prisma } from "../../lib/prisma";
-import { ProductSchema } from "./schema";
+import { GetProductParamSchema, ProductSchema } from "./schema";
 
 export const productRoutes = new OpenAPIHono();
 
@@ -30,6 +30,9 @@ productRoutes.openapi(
     method: "get",
     tags,
     description: "Get Product by Slug",
+    request: {
+      params: GetProductParamSchema,
+    },
     responses: {
       200: {
         content: { "application/json": { schema: ProductSchema } },

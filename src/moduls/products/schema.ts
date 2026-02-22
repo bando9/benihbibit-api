@@ -10,3 +10,10 @@ export const ProductSchema = z.object({
   imageUrl: z.string(),
   description: z.string(),
 });
+
+export const GetProductParamSchema = z.object({
+  slug: z
+    .string()
+    .min(1)
+    .openapi({ example: "benih-lokal-organik-cosmos-20-biji" }),
+});
