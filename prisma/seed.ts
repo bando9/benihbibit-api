@@ -1,5 +1,5 @@
 import { prisma } from "../src/lib/prisma";
-import { products } from "../src/moduls/products/data";
+import { products } from "../src/modules/products/data";
 
 async function main() {
   console.log("Seeding process...");

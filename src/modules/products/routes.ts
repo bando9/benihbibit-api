@@ -1,6 +1,6 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { prisma } from "../../lib/prisma";
-import { GetProductParamSchema, ProductSchema } from "./schema";
+import { GetProductParamSchema, ProductSchema, ProductsSchema } from "./schema";
 
 export const productRoutes = new OpenAPIHono();
 
@@ -15,6 +15,7 @@ productRoutes.openapi(
     responses: {
       200: {
         description: "Successfully get all products",
+        content: { "application/json": { schema: ProductsSchema } },
       },
     },
   },
