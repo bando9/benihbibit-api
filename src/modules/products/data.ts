@@ -1,6 +1,7 @@
-export const products = [
+import { SeedProducts } from "./schema";
+
+export const products: SeedProducts = [
   {
-    id: "ULID100",
     slug: "benih-lokal-organik-cosmos-20-biji",
     name: "Benih Lokal Organik Cosmos 20 biji",
     sku: "BEN-COS-1",
@@ -12,7 +13,6 @@ export const products = [
       "Menyediakan benih buah dan bunga lokal organik dari petani Kampung Eduwisata Areng Lembang. Benih dikemas dengan ziplock foil. Isi 1gram",
   },
   {
-    id: "ULID101",
     slug: "benih-hibiscus-merah-tropis-15-biji",
     name: "Benih Hibiscus Merah Tropis 15 Biji",
     sku: "BEN-HIB-1",
@@ -24,7 +24,6 @@ export const products = [
       "Benih bunga Hibiscus merah tropis berkualitas tinggi. Cocok ditanam di iklim Indonesia, menghasilkan bunga besar dan cerah. Kemasan ziplock foil, isi 15 biji.",
   },
   {
-    id: "ULID102",
     slug: "benih-marigold-kuning-cerah-20-biji",
     name: "Benih Marigold Kuning Cerah 20 Biji",
     sku: "BEN-MAR-1",
@@ -36,7 +35,6 @@ export const products = [
       "Benih bunga Marigold warna kuning cerah dengan daya tumbuh tinggi. Cocok untuk taman rumah dan tanaman pagar alami. Isi 20 biji, kemasan higienis.",
   },
   {
-    id: "ULID103",
     slug: "benih-daisy-putih-klasik-25-biji",
     name: "Benih Daisy Putih Klasik 25 Biji",
     sku: "BEN-DAI-1",
@@ -48,7 +46,6 @@ export const products = [
       "Benih Daisy putih klasik dengan kelopak bersih dan pusat kuning cerah. Mudah ditanam untuk pemula. Isi 25 biji, cocok untuk taman minimalis.",
   },
   {
-    id: "ULID104",
     slug: "benih-larkdaisy-mix-color-20-biji",
     name: "Benih Larkdaisy Mix Color 20 Biji",
     sku: "BEN-LKD-1",
@@ -60,7 +57,6 @@ export const products = [
       "Benih Larkdaisy campuran warna cerah (ungu, pink, putih). Cocok untuk mempercantik taman atau pot dekoratif. Isi 20 biji, daya tumbuh optimal.",
   },
   {
-    id: "ULID105",
     slug: "benih-zinnia-mix-color-30-biji",
     name: "Benih Zinnia Mix Color 30 Biji",
     sku: "BEN-ZIN-1",

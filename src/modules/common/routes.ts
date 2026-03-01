@@ -9,16 +9,21 @@ helloRoutes.openapi(
     method: "get",
     path: "/",
     tags,
-    description: "get hello test",
+    description: "Hello Benih Bibit API",
     responses: {
       200: {
-        description: "Successfully get hello test",
+        description: "Successfully get hello",
+        // content ...
       },
     },
   },
 
   (c) => {
-    const text = "Hello, test!";
-    return c.json(text, 200);
+    return c.json(
+      {
+        message: "Hello Benih Bibit API",
+      },
+      200,
+    );
   },
 );

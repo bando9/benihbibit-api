@@ -9,16 +9,20 @@ cartRoutes.openapi(
   {
     path: "/",
     method: "get",
-    description: "Get cart product",
+    description: "Get cart",
     tags,
     responses: {
       200: {
-        description: "Success get cart product",
+        description: "Success get user's cart",
       },
     },
   },
   async (c) => {
-    const carts = await prisma.product.findMany();
-    return c.json(carts, 200);
+    return c.json(
+      {
+        message: "Get user's cart",
+      },
+      200,
+    );
   },
 );
