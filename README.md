@@ -1,4 +1,4 @@
-# Benih Bibit - Backend API
+# Benihbibit - Backend API
 
 ## REST API Specification
 
@@ -17,18 +17,24 @@ Products:
 
 Auth:
 
-| Endpoint           | HTTP     | Permission    |
-| ------------------ | -------- | ------------- |
-| `/users`           | `GET`    | Public        |
-| `/users/:username` | `GET`    | Public        |
-| `/auth/register`   | `POST`   | Public        |
-| `/auth/login`      | `POST`   | Public        |
-| `/auth/me`         | `GET`    | Authenticated |
-| `/auth/logout`     | `POST`   | Authenticated |
-| `/cart`            | `GET`    | Authenticated |
-| `/cart/items`      | `POST`   | Authenticated |
-| `/cart/items/:id`  | `DELETE` | Authenticated |
-| `/cart/items/:id`  | `PUT`    | Authenticated |
+| Endpoint           | HTTP   | Permission    |
+| ------------------ | ------ | ------------- |
+| `/users`           | `GET`  | Public        |
+| `/users/:username` | `GET`  | Public        |
+| `/auth/register`   | `POST` | Public        |
+| `/auth/login`      | `POST` | Public        |
+| `/auth/me`         | `GET`  | Authenticated |
+| `/auth/logout`     | `POST` | Authenticated |
+
+Cart:
+
+| Endpoint          | HTTP     | Permission    |
+| ----------------- | -------- | ------------- |
+| `/users`          | `GET`    | Public        |
+| `/cart`           | `GET`    | Authenticated |
+| `/cart/items`     | `POST`   | Authenticated |
+| `/cart/items/:id` | `DELETE` | Authenticated |
+| `/cart/items/:id` | `PUT`    | Authenticated |
 
 ## Getting Started
 
@@ -42,7 +48,7 @@ Setup database:
 
 ```sh
 # Run database only
-bun docker:up
+bun db:up
 ```
 
 Install dependencies:
@@ -81,6 +87,6 @@ Make sure the `DATABASE_URL` is configured in `.env` file for usage with Docker 
 If we need to build the Docker image:
 
 ```sh
-bun docker:build
+bun db:build
 # docker compose up -d --build
 ```
