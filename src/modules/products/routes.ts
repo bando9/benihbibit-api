@@ -2,8 +2,9 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { prisma } from "../../lib/prisma";
 import {
   GetProductParamSchema,
+  PaginatedProductsSchema,
+  ProductQuerySchema,
   ProductSchema,
-  ProductsSchema,
   SearchQuerySchema,
 } from "./schema-type";
 
@@ -31,17 +32,44 @@ productRoutes.openapi(
     path: "/",
     method: "get",
     tags,
-    description: "Get All Product",
+    description: "Get Product with optional pagination and metadata",
+    request: {
+      query: ProductQuerySchema,
+    },
     responses: {
       200: {
-        description: "Successfully get all products",
-        content: { "application/json": { schema: ProductsSchema } },
+        description: "Successfully get products with optional pagination",
+        content: { "application/json": { schema: PaginatedProductsSchema } },
       },
     },
   },
   async (c) => {
-    const products = await prisma.product.findMany();
-    return c.json(products, 200);
+    const { page = 1, pageSize = 10 } = c.req.valid("query");
+
+    const resultsPerPage = pageSize;
+    const currentPage = page;
+
+    const totalCount = await prisma.product.count();
+    const totalPages = Math.ceil(totalCount / pageSize);
+
+    const products = await prisma.product.findMany({
+      take: resultsPerPage,
+      skip: (currentPage - 1) * resultsPerPage,
+      orderBy: { createdAt: "desc" },
+    });
+
+    return c.json(
+      {
+        data: products,
+        meta: {
+          total: totalCount,
+          page,
+          pageSize,
+          totalPages,
+        },
+      },
+      200,
+    );
   },
 );
 
@@ -53,6 +81,7 @@ productRoutes.openapi(
       query: SearchQuerySchema,
     },
     tags,
+    description: "Search product by name or sku",
     responses: {
       200: {
         description: "Success get query search",

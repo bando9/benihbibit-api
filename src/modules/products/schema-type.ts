@@ -33,6 +33,21 @@ export const SearchQuerySchema = z.object({
   q: z.string().openapi({ example: "Marigold" }),
 });
 
+export const ProductQuerySchema = z.object({
+  page: z.coerce.number().default(1),
+  pageSize: z.coerce.number().default(10),
+});
+
+export const PaginatedProductsSchema = z.object({
+  data: ProductsSchema,
+  meta: z.object({
+    total: z.int(),
+    page: z.int(),
+    pageSize: z.int(),
+    totalPages: z.int(),
+  }),
+});
+
 // Type
 export type ProductType = z.infer<typeof ProductSchema>;
 export type ProductsType = z.infer<typeof ProductsSchema>;
