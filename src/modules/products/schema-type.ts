@@ -29,6 +29,10 @@ export const GetProductParamSchema = z.object({
     .openapi({ example: "benih-lokal-organik-cosmos-20-biji" }),
 });
 
+export const SearchQuerySchema = z.object({
+  q: z.string().openapi({ example: "Marigold" }),
+});
+
 // Type
 export type ProductType = z.infer<typeof ProductSchema>;
 export type ProductsType = z.infer<typeof ProductsSchema>;
