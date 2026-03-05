@@ -38,6 +38,8 @@ export const ProductQuerySchema = z.object({
   pageSize: z.coerce.number().default(10),
   minPrice: z.coerce.number().default(0),
   maxPrice: z.coerce.number().default(1000000000),
+  sortOrder: z.enum(["desc", "asc"]).default("desc"),
+  sortBy: z.enum(["createdAt", "price", "name"]).default("createdAt"),
 });
 
 export const PaginatedProductsSchema = z.object({

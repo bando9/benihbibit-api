@@ -49,25 +49,35 @@ productRoutes.openapi(
       pageSize = 10,
       minPrice = 0,
       maxPrice = 1000000000,
+      sortBy = "createdAt",
+      sortOrder = "desc",
     } = c.req.valid("query");
 
-    const resultsPerPage = pageSize;
-    const currentPage = page;
+    const whereCondition: any = {};
 
-    const totalCount = await prisma.product.count();
-    const totalPages = Math.ceil(totalCount / pageSize);
+    if (minPrice !== undefined || maxPrice !== undefined) {
+      whereCondition.price = {};
+      if (minPrice !== undefined) {
+        whereCondition.price.gte = minPrice;
+      }
+      if (maxPrice !== undefined) {
+        whereCondition.price.lte = maxPrice;
+      }
+    }
+
+    const skip = (page - 1) * pageSize;
 
     const products = await prisma.product.findMany({
-      take: resultsPerPage,
-      skip: (currentPage - 1) * resultsPerPage,
-      where: {
-        price: {
-          gt: minPrice,
-          lt: maxPrice,
-        },
-      },
-      orderBy: { createdAt: "desc" },
+      take: pageSize,
+      skip,
+      where: whereCondition,
+      orderBy: { [sortBy]: sortOrder },
     });
+
+    const totalCount = await prisma.product.count({
+      where: whereCondition,
+    });
+    const totalPages = Math.ceil(totalCount / pageSize);
 
     return c.json(
       {
