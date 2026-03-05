@@ -36,6 +36,8 @@ export const SearchQuerySchema = z.object({
 export const ProductQuerySchema = z.object({
   page: z.coerce.number().default(1),
   pageSize: z.coerce.number().default(10),
+  minPrice: z.coerce.number().default(0),
+  maxPrice: z.coerce.number().default(1000000000),
 });
 
 export const PaginatedProductsSchema = z.object({

@@ -44,7 +44,12 @@ productRoutes.openapi(
     },
   },
   async (c) => {
-    const { page = 1, pageSize = 10 } = c.req.valid("query");
+    const {
+      page = 1,
+      pageSize = 10,
+      minPrice = 0,
+      maxPrice = 1000000000,
+    } = c.req.valid("query");
 
     const resultsPerPage = pageSize;
     const currentPage = page;
@@ -55,6 +60,12 @@ productRoutes.openapi(
     const products = await prisma.product.findMany({
       take: resultsPerPage,
       skip: (currentPage - 1) * resultsPerPage,
+      where: {
+        price: {
+          gt: minPrice,
+          lt: maxPrice,
+        },
+      },
       orderBy: { createdAt: "desc" },
     });
 
@@ -73,6 +84,7 @@ productRoutes.openapi(
   },
 );
 
+// Search
 productRoutes.openapi(
   {
     path: "/search",
@@ -117,6 +129,7 @@ productRoutes.openapi(
   },
 );
 
+// Detail
 productRoutes.openapi(
   {
     path: "/{slug}",
