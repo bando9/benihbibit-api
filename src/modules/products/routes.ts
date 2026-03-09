@@ -74,23 +74,12 @@ productRoutes.openapi(
       orderBy: { [sortBy]: sortOrder },
     });
 
-    const totalCount = await prisma.product.count({
-      where: whereCondition,
-    });
-    const totalPages = Math.ceil(totalCount / pageSize);
+    // const totalCount = await prisma.product.count({
+    //   where: whereCondition,
+    // });
+    // const totalPages = Math.ceil(totalCount / pageSize);
 
-    return c.json(
-      {
-        data: products,
-        meta: {
-          total: totalCount,
-          page,
-          pageSize,
-          totalPages,
-        },
-      },
-      200,
-    );
+    return c.json(products, 200);
   },
 );
 

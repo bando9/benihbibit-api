@@ -4,7 +4,6 @@ import { Scalar } from "@scalar/hono-api-reference";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { helloRoutes } from "./modules/common/routes";
 import { productRoutes } from "./modules/products/routes";
-import { cartRoutes } from "./modules/cart/route";
 
 const app = new OpenAPIHono();
 
@@ -20,8 +19,7 @@ app.use(
 
 export const appRoutes = app
   .route("/hello", helloRoutes)
-  .route("/products", productRoutes)
-  .route("/cart", cartRoutes);
+  .route("/products", productRoutes);
 
 // API Docs
 app.doc("/openapi.json", {
