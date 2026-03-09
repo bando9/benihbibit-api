@@ -1,4 +1,4 @@
-import { OpenAPIHono } from "@hono/zod-openapi";
+import { OpenAPIHono, z, ZodOpenApiZodType } from "@hono/zod-openapi";
 import { prisma } from "../../lib/prisma";
 import {
   GetProductParamSchema,
@@ -27,6 +27,10 @@ export const productRoutes = new OpenAPIHono({
 
 const tags = ["products"];
 
+const customHeaderSchema = z
+  .string()
+  .meta({ header: true, description: "My header description" });
+
 productRoutes.openapi(
   {
     path: "/",
@@ -40,6 +44,13 @@ productRoutes.openapi(
       200: {
         description: "Successfully get products with optional pagination",
         content: { "application/json": { schema: PaginatedProductsSchema } },
+        headers: {
+          "x-total-count-product":
+            customHeaderSchema as ZodOpenApiZodType<string>,
+          page: customHeaderSchema as ZodOpenApiZodType<string>,
+          "x-page-size": customHeaderSchema as ZodOpenApiZodType<string>,
+          "x-total-pages": customHeaderSchema as ZodOpenApiZodType<string>,
+        },
       },
     },
   },
@@ -74,12 +85,17 @@ productRoutes.openapi(
       orderBy: { [sortBy]: sortOrder },
     });
 
-    // const totalCount = await prisma.product.count({
-    //   where: whereCondition,
-    // });
-    // const totalPages = Math.ceil(totalCount / pageSize);
+    const totalCount = await prisma.product.count({
+      where: whereCondition,
+    });
+    const totalPages = Math.ceil(totalCount / pageSize);
 
-    return c.json(products, 200);
+    return c.json(products, 200, {
+      "x-total": totalCount.toString(),
+      "x-page": page.toString(),
+      "x-page-size": pageSize.toString(),
+      "x-total-pages": totalPages.toString(),
+    });
   },
 );
 
