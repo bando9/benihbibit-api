@@ -42,16 +42,6 @@ export const ProductQuerySchema = z.object({
   sortBy: z.enum(["createdAt", "price", "name"]).default("createdAt"),
 });
 
-export const PaginatedProductsSchema = z.object({
-  data: ProductsSchema,
-  meta: z.object({
-    total: z.int(),
-    page: z.int(),
-    pageSize: z.int(),
-    totalPages: z.int(),
-  }),
-});
-
 // Type
 export type ProductType = z.infer<typeof ProductSchema>;
 export type ProductsType = z.infer<typeof ProductsSchema>;

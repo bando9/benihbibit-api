@@ -1,10 +1,10 @@
-import { OpenAPIHono, z, ZodOpenApiZodType } from "@hono/zod-openapi";
+import { OpenAPIHono, z } from "@hono/zod-openapi";
 import { prisma } from "../../lib/prisma";
 import {
   GetProductParamSchema,
-  PaginatedProductsSchema,
   ProductQuerySchema,
   ProductSchema,
+  ProductsSchema,
   SearchQuerySchema,
 } from "./schema-type";
 
@@ -36,21 +36,15 @@ productRoutes.openapi(
     path: "/",
     method: "get",
     tags,
-    description: "Get Product with optional pagination and metadata",
+    description: "Get Products with optional pagination, filter, & sort",
     request: {
       query: ProductQuerySchema,
     },
     responses: {
       200: {
-        description: "Successfully get products with optional pagination",
-        content: { "application/json": { schema: PaginatedProductsSchema } },
-        headers: {
-          "x-total-count-product":
-            customHeaderSchema as ZodOpenApiZodType<string>,
-          page: customHeaderSchema as ZodOpenApiZodType<string>,
-          "x-page-size": customHeaderSchema as ZodOpenApiZodType<string>,
-          "x-total-pages": customHeaderSchema as ZodOpenApiZodType<string>,
-        },
+        description:
+          "Successfully get products with optional pagination, filter, & sort",
+        content: { "application/json": { schema: ProductsSchema } },
       },
     },
   },
