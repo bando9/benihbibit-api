@@ -8,7 +8,7 @@ export const products: SeedProductsType = [
     price: 5700,
     stockQuantity: 10,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/4a8d4699-a3b8-47fe-9112-bc75d635d751/-/preview/639x629/",
+      "https://27hpovti1s.ucarecd.net/73e5cc3e-9637-4dc3-b65e-ee58ddb84618/cosmos.jpg",
     description:
       "Benih bunga Cosmos dengan warna cerah dan mudah tumbuh. Cocok untuk taman rumah dan pot dekoratif. Isi 20 biji dalam kemasan ziplock foil.",
   },
@@ -19,7 +19,7 @@ export const products: SeedProductsType = [
     price: 5700,
     stockQuantity: 25,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/09f3670c-8d01-47eb-ab88-8dcf3c41dc15/hibiscus.png",
+      "https://27hpovti1s.ucarecd.net/9197ff52-2d43-4af0-b82e-b756662c9b5d/hibiscus.jpg",
     description:
       "Benih bunga Hibiscus merah tropis berkualitas tinggi. Cocok ditanam di iklim Indonesia dengan bunga besar dan warna cerah. Isi 15 biji.",
   },
@@ -30,7 +30,7 @@ export const products: SeedProductsType = [
     price: 5700,
     stockQuantity: 40,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/74117fa4-f0c7-456f-bac8-bf96061ab885/marigold.png",
+      "https://27hpovti1s.ucarecd.net/7b61da13-80ff-4e5e-861b-4153cdf75fe8/marigold.jpg",
     description:
       "Benih bunga Marigold warna kuning cerah dengan daya tumbuh tinggi. Cocok untuk taman rumah dan tanaman pagar alami. Isi 20 biji.",
   },
@@ -41,7 +41,7 @@ export const products: SeedProductsType = [
     price: 5700,
     stockQuantity: 30,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/73676660-0725-462b-95e5-61afabfded68/daisy.png",
+      "https://27hpovti1s.ucarecd.net/5e26ffcd-b7a7-481b-b717-80bb4ee731fb/daisy.jpg",
     description:
       "Benih Daisy putih klasik dengan kelopak bersih dan pusat kuning cerah. Mudah ditanam untuk pemula. Isi 25 biji.",
   },
@@ -52,7 +52,7 @@ export const products: SeedProductsType = [
     price: 5700,
     stockQuantity: 20,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/d5bb179d-ecd6-4e8a-86d6-1b5d6d56bfad/lardkdaisy.png",
+      "https://27hpovti1s.ucarecd.net/57e9911b-d67e-4224-a9f2-19fefe614612/lardkdaisy.jpg",
     description:
       "Benih Larkdaisy campuran warna cerah seperti ungu, pink, dan putih. Cocok untuk taman atau pot dekoratif. Isi 20 biji.",
   },
@@ -63,7 +63,7 @@ export const products: SeedProductsType = [
     price: 5700,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/28e095f4-c352-4e9e-bd36-de7439cc3151/zinnia.png",
+      "https://27hpovti1s.ucarecd.net/3c36d224-69a2-4d5b-9c08-88a72d457f94/zinnia.jpg",
     description:
       "Benih Zinnia warna-warni dengan bunga besar dan tahan panas. Cocok untuk taman tropis Indonesia. Isi 30 biji.",
   },
@@ -75,7 +75,7 @@ export const products: SeedProductsType = [
     price: 5700,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/b705dc0b-dcda-426d-9a78-f0955c724960/seledri.png",
+      "https://27hpovti1s.ucarecd.net/f6a6f994-c7be-483c-8efd-2d58648b934d/seledri.jpg",
     description:
       "Benih seledri berkualitas dengan pertumbuhan cepat. Cocok ditanam di pot atau kebun rumah. Isi 20 biji.",
   },
@@ -86,7 +86,7 @@ export const products: SeedProductsType = [
     price: 1000,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/17702c2f-ac4c-4f7e-978f-4f34985bf1ba/cabecengek.png",
+      "https://27hpovti1s.ucarecd.net/fa5d9f61-faec-47b3-afa4-87414255ccd0/cabecengek.jpg",
     description:
       "Benih cabe cengek pedas khas Indonesia. Cocok ditanam di pot atau kebun rumah. Isi 20 biji.",
   },
@@ -97,7 +97,7 @@ export const products: SeedProductsType = [
     price: 10000,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/d6f65c48-8a38-4663-97d3-cc9b66093208/ketumbar.png",
+      "https://27hpovti1s.ucarecd.net/3f647f3f-5209-4b5a-b149-888f5a8605d5/ketumbar.jpg",
     description:
       "Benih ketumbar berkualitas untuk tanaman rempah dapur. Mudah ditanam dan cocok untuk kebun rumah.",
   },
@@ -109,7 +109,7 @@ export const products: SeedProductsType = [
     price: 12000,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/380214c5-a68e-4a9b-8d92-236c7e30b78d/lolipop.png",
+      "https://27hpovti1s.ucarecd.net/5203b08d-4cdc-48b4-a88a-d76ff9ea47f7/lolipop.jpg",
     description:
       "Benih bunga Lollipop dengan bentuk unik dan warna menarik. Cocok untuk mempercantik taman.",
   },
@@ -120,7 +120,7 @@ export const products: SeedProductsType = [
     price: 1000,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/bae655af-1f02-4468-aab5-3de8292352cb/romaine.png",
+      "https://27hpovti1s.ucarecd.net/aa4b811b-6fbc-493a-96fc-1c2b6d750cb0/romaine.jpg",
     description:
       "Benih selada Green Romaine segar dan mudah ditanam. Cocok untuk kebun rumah dan hidroponik.",
   },
@@ -131,7 +131,7 @@ export const products: SeedProductsType = [
     price: 7000,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/e3c9b634-e8b0-434a-8a12-ccecc2c09fe3/zebrinagantung.png",
+      "https://27hpovti1s.ucarecd.net/ff1aa943-3ff2-4dd8-98be-29ad71af6e82/zebrinagantung.jpg",
     description:
       "Benih tanaman Zebrina gantung dengan daun dekoratif. Cocok untuk pot gantung dan taman minimalis.",
   },
@@ -142,7 +142,7 @@ export const products: SeedProductsType = [
     price: 7500,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/3d199306-89ff-426a-b906-b9f51ebafe90/lengkuas.png",
+      "https://27hpovti1s.ucarecd.net/08058331-8382-406c-8367-509e13f4d104/lengkuas.jpg",
     description:
       "Benih lengkuas untuk tanaman rempah dapur. Cocok ditanam di kebun rumah.",
   },
@@ -153,7 +153,7 @@ export const products: SeedProductsType = [
     price: 8200,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/d764fa2c-354a-4108-978f-f8acb83ae248/mint.png",
+      "https://27hpovti1s.ucarecd.net/a9ece480-f23e-4177-9fcc-9ce2589e69ae/mint.jpg",
     description:
       "Benih tanaman mint segar dengan aroma khas. Cocok untuk kebun herbal rumah.",
   },
@@ -164,7 +164,7 @@ export const products: SeedProductsType = [
     price: 10000,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/121e9eec-9f23-4c7a-8c32-75924d688e65/parsley.png",
+      "https://27hpovti1s.ucarecd.net/8001f358-ca3d-479b-8d1a-059825ecdb56/parsley.jpg",
     description: "Benih parsley segar yang cocok untuk tanaman herbal dapur.",
   },
   {
@@ -174,7 +174,7 @@ export const products: SeedProductsType = [
     price: 7500,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/f2745d83-e4a3-4079-86d5-fadabcf7888f/jahemerah.png",
+      "https://27hpovti1s.ucarecd.net/f5978571-b972-4782-aa02-30674edacdd6/jahemerah.jpg",
     description:
       "Benih jahe merah dengan manfaat kesehatan dan cocok ditanam di kebun rumah.",
   },
@@ -185,7 +185,7 @@ export const products: SeedProductsType = [
     price: 12000,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/b6346970-ac87-43f0-bef0-de4bee04af2e/kelor.png",
+      "https://27hpovti1s.ucarecd.net/0f17a079-e1a4-4cee-ba3b-8a52bd0547c4/kelor.jpg",
     description:
       "Benih tanaman kelor yang dikenal dengan manfaat kesehatan tinggi.",
   },
@@ -196,7 +196,7 @@ export const products: SeedProductsType = [
     price: 9500,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/e7310924-8f91-47b2-a9ed-f290fac98d43/pandan.png",
+      "https://27hpovti1s.ucarecd.net/3bb2ad6c-03c1-4b89-b44e-da31d97e13f9/pandan.jpg",
     description:
       "Benih pandan harum yang cocok untuk tanaman dapur dan bumbu masakan.",
   },
@@ -207,7 +207,7 @@ export const products: SeedProductsType = [
     price: 5700,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/919c502b-0e37-414f-bd8b-dc518a886100/wortel.png",
+      "https://27hpovti1s.ucarecd.net/11a8d1f5-4eae-4cfb-b11c-1f97c0dbba8f/wortel.jpg",
     description:
       "Benih wortel segar dengan pertumbuhan cepat dan cocok untuk kebun rumah.",
   },
@@ -218,7 +218,7 @@ export const products: SeedProductsType = [
     price: 5700,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/fb3679f5-189b-40ae-a0a0-d33cf8b43a25/pakcoy.png",
+      "https://27hpovti1s.ucarecd.net/6f3f128b-7b4d-47db-ac64-a2da2e941858/pakcoy.jpg",
     description:
       "Benih pakcoy segar yang cocok ditanam di kebun rumah atau sistem hidroponik.",
   },
@@ -229,7 +229,7 @@ export const products: SeedProductsType = [
     price: 1200,
     stockQuantity: 35,
     imageUrl:
-      "https://27hpovti1s.ucarecd.net/a75e34f8-98f2-4d30-84ec-03acc8be2b74/katuk.png",
+      "https://27hpovti1s.ucarecd.net/bf2b171c-c736-4db3-9b44-e34730eab321/katuk.jpg",
     description:
       "Benih tanaman katuk yang dikenal sebagai sayuran bergizi tinggi.",
   },
