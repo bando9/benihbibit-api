@@ -17,7 +17,7 @@ userRoute.openapi(
         content: { "application/json": { schema: UserSchema } },
         description: "Success get all users",
       },
-      400: {
+      401: {
         description: "User not registered yet",
       },
     },
@@ -26,7 +26,7 @@ userRoute.openapi(
     const user = await prisma.user.findMany();
 
     if (!user) {
-      return c.json("User not registered yet", 400);
+      return c.json("User not registered yet", 401);
     }
 
     return c.json(user, 200);
