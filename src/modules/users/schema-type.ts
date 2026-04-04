@@ -24,3 +24,7 @@ export const SeedUsersSchema = SeedUserSchema.array();
 
 export type SeedUser = z.infer<typeof SeedUserSchema>;
 export type SeedUsers = z.infer<typeof SeedUsersSchema>;
+
+export const GetUserParamsSchema = z.object({
+  id: z.string().openapi({ example: "7H1S1S1DNUM83R" }),
+});
