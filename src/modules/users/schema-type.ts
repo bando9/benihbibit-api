@@ -1,4 +1,4 @@
-import z, { email } from "zod";
+import z from "zod";
 import { UserModelSchema } from "../../generated/zod/schemas";
 
 export const UserSchema = UserModelSchema.omit({
@@ -8,6 +8,11 @@ export const UserSchema = UserModelSchema.omit({
   username: z.string().openapi({ example: "example123" }),
   email: z.string().openapi({ example: "example@example.com" }),
 });
+
+export const UsersSchema = UserSchema.array();
+
+export type UserType = z.infer<typeof UserSchema>;
+export type UsersType = z.infer<typeof UsersSchema>;
 
 export const SeedUserSchema = UserModelSchema.omit({
   id: true,
