@@ -2,11 +2,11 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { prisma } from "../../lib/prisma";
 import { UserSchema } from "./schema";
 
-export const userRoutes = new OpenAPIHono();
+export const userRoute = new OpenAPIHono();
 
 const tag = ["users"];
 
-userRoutes.openapi(
+userRoute.openapi(
   {
     path: "/",
     method: "get",

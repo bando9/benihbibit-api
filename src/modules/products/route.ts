@@ -8,7 +8,7 @@ import {
   SearchQuerySchema,
 } from "./schema-type";
 
-export const productRoutes = new OpenAPIHono({
+export const productRoute = new OpenAPIHono({
   defaultHook: (result, c) => {
     if (!result.success) {
       return c.json(
@@ -31,7 +31,7 @@ const customHeaderSchema = z
   .string()
   .meta({ header: true, description: "My header description" });
 
-productRoutes.openapi(
+productRoute.openapi(
   {
     path: "/",
     method: "get",
@@ -94,7 +94,7 @@ productRoutes.openapi(
 );
 
 // Search
-productRoutes.openapi(
+productRoute.openapi(
   {
     path: "/search",
     method: "get",
@@ -139,7 +139,7 @@ productRoutes.openapi(
 );
 
 // Detail
-productRoutes.openapi(
+productRoute.openapi(
   {
     path: "/{slug}",
     method: "get",

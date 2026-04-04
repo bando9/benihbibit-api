@@ -2,8 +2,10 @@ import { logger } from "hono/logger";
 import { cors } from "hono/cors";
 import { Scalar } from "@scalar/hono-api-reference";
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { helloRoutes } from "./modules/common/routes";
-import { productRoutes } from "./modules/products/routes";
+import { helloRoute } from "./modules/common/route";
+import { productRoute } from "./modules/products/route";
+import { userRoute } from "./modules/users/route";
+import { authRoute } from "./modules/auth/route";
 
 const app = new OpenAPIHono();
 
@@ -19,8 +21,10 @@ app.use(
 );
 
 export const appRoutes = app
-  .route("/hello", helloRoutes)
-  .route("/products", productRoutes);
+  .route("/hello", helloRoute)
+  .route("/products", productRoute)
+  .route("/users", userRoute)
+  .route("/auth", authRoute);
 
 // API Docs
 app.doc("/openapi.json", {
