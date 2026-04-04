@@ -34,12 +34,15 @@ export const SearchQuerySchema = z.object({
 });
 
 export const ProductQuerySchema = z.object({
-  page: z.coerce.number().default(1),
-  pageSize: z.coerce.number().default(10),
-  minPrice: z.coerce.number().default(0),
-  maxPrice: z.coerce.number().default(1000000000),
-  sortOrder: z.enum(["desc", "asc"]).default("desc"),
-  sortBy: z.enum(["createdAt", "price", "name"]).default("createdAt"),
+  page: z.coerce.number().optional().default(1),
+  pageSize: z.coerce.number().optional().default(10),
+  minPrice: z.coerce.number().optional().default(0),
+  maxPrice: z.coerce.number().optional().default(1000000000),
+  sortOrder: z.enum(["desc", "asc"]).optional().default("desc"),
+  sortBy: z
+    .enum(["createdAt", "price", "name"])
+    .optional()
+    .default("createdAt"),
 });
 
 // Type
