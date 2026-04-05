@@ -1,5 +1,9 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { RegisterUser } from "./schema-type";
+import {
+  LoginResponseSchema,
+  LoginUserSchema,
+  RegisterUserSchema,
+} from "./schema-type";
 import { UserSchema } from "../users/schema-type";
 import { hashPassword } from "../../lib/hash";
 import { prisma } from "../../lib/prisma";
@@ -14,7 +18,7 @@ authRoute.openapi(
     method: "post",
     tags: tags,
     request: {
-      body: { content: { "application/json": { schema: RegisterUser } } },
+      body: { content: { "application/json": { schema: RegisterUserSchema } } },
     },
     responses: {
       201: {
@@ -61,6 +65,51 @@ authRoute.openapi(
     } catch (error) {
       console.log(error);
       return c.json("Failed register new user", 400);
+    }
+  },
+);
+
+authRoute.openapi(
+  {
+    path: "/login",
+    method: "post",
+    tags: tags,
+    request: {
+      body: { content: { "application/json": { schema: LoginUserSchema } } },
+    },
+    responses: {
+      200: {
+        description: "Success login user",
+        content: { "application/json": { schema: LoginResponseSchema } },
+      },
+      401: { description: "Failed login, wrong email / password" },
+    },
+  },
+  async (c) => {
+    try {
+      const validatedBody = c.req.valid("json");
+
+      const user = await prisma.user.findUnique({
+        where: {
+          email: validatedBody.email,
+        },
+        include: {
+          password: {
+            select: { hash: true },
+          },
+        },
+      });
+
+      return c.json(
+        {
+          token: "",
+          user: user,
+        },
+        200,
+      );
+    } catch (error) {
+      console.log(error);
+      return c.json("Failed login, wrong email / password", 401);
     }
   },
 );
