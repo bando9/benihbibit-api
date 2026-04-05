@@ -5,7 +5,7 @@ import {
   RegisterUserSchema,
 } from "./schema-type";
 import { UserSchema } from "../users/schema-type";
-import { hashPassword } from "../../lib/hash";
+import { hashPassword, verifyPassword } from "../../lib/hash";
 import { prisma } from "../../lib/prisma";
 
 export const authRoute = new OpenAPIHono();
@@ -89,7 +89,7 @@ authRoute.openapi(
     try {
       const validatedBody = c.req.valid("json");
 
-      const user = await prisma.user.findUnique({
+      const existingUser = await prisma.user.findUnique({
         where: {
           email: validatedBody.email,
         },
@@ -100,10 +100,26 @@ authRoute.openapi(
         },
       });
 
+      if (
+        existingUser?.email !== validatedBody.email ||
+        !existingUser?.password
+      ) {
+        return c.json("Failed login. wrong email / password", 401);
+      }
+
+      const isPasswordVerified = await verifyPassword(
+        existingUser.password.hash,
+        validatedBody.password,
+      );
+
+      if (!isPasswordVerified) {
+        return c.json("Failed login. wrong email / password", 401);
+      }
+
       return c.json(
         {
           token: "",
-          user: user,
+          user: existingUser,
         },
         200,
       );
