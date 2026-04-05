@@ -7,6 +7,7 @@ import {
 import { UserSchema } from "../users/schema-type";
 import { hashPassword, verifyPassword } from "../../lib/hash";
 import { prisma } from "../../lib/prisma";
+import { Prisma } from "../../generated/prisma/client";
 
 export const authRoute = new OpenAPIHono();
 
@@ -37,20 +38,7 @@ authRoute.openapi(
         return c.json("Failed register new user", 400);
       }
 
-      const existingUser = await prisma.user.findFirst({
-        where: {
-          OR: [
-            { email: validatedBody.email },
-            { username: validatedBody.username },
-          ],
-        },
-      });
-
-      if (existingUser) {
-        return c.json("Email or username have been used", 409);
-      }
-
-      const registerUser = await prisma.user.create({
+      const newUser = await prisma.user.create({
         data: {
           name: validatedBody.name,
           email: validatedBody.email,
@@ -61,10 +49,15 @@ authRoute.openapi(
         },
       });
 
-      return c.json(registerUser, 201);
+      return c.json(newUser, 201);
     } catch (error) {
       console.log(error);
-      return c.json("Failed register new user", 400);
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === "P2002") {
+          return c.json("email or username already in use", 409);
+        }
+      }
+      return c.json("Failed to register user", 400);
     }
   },
 );
