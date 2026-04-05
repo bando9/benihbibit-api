@@ -112,7 +112,12 @@ authRoute.openapi(
       return c.json(
         {
           token: "",
-          user: existingUser,
+          user: {
+            id: existingUser.id,
+            username: existingUser.username,
+            email: existingUser.email,
+            name: existingUser.name,
+          },
         },
         200,
       );
