@@ -24,6 +24,9 @@ export const LoginResponseSchema = z.object({
   }),
 });
 
-export type RegisterUserTYpe = z.infer<typeof RegisterUserSchema>;
+export const TokenUserSchema = UserSchema.pick({ id: true });
+
+export type TokenUserType = z.infer<typeof TokenUserSchema>;
+export type RegisterUserType = z.infer<typeof RegisterUserSchema>;
 export type LoginUserType = z.infer<typeof LoginUserSchema>;
 export type LoginResponseType = z.infer<typeof LoginResponseSchema>;
