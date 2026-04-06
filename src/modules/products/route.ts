@@ -1,4 +1,4 @@
-import { OpenAPIHono, z } from "@hono/zod-openapi";
+import { OpenAPIHono } from "@hono/zod-openapi";
 import { prisma } from "../../lib/prisma";
 import {
   GetProductParamSchema,
@@ -26,10 +26,6 @@ export const productRoute = new OpenAPIHono({
 });
 
 const tags = ["products"];
-
-const customHeaderSchema = z
-  .string()
-  .meta({ header: true, description: "My header description" });
 
 productRoute.openapi(
   {

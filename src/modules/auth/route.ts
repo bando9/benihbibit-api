@@ -9,10 +9,17 @@ import { hashPassword, verifyPassword } from "../../lib/hash";
 import { prisma } from "../../lib/prisma";
 import { Prisma } from "../../generated/prisma/client";
 import { signToken } from "../../lib/token";
+import { checkAuthMiddleware } from "./middleware";
 
 export const authRoute = new OpenAPIHono();
 
 const tags = ["auth"];
+
+authRoute.openAPIRegistry.registerComponent("securitySchemes", "Bearer", {
+  type: "http",
+  scheme: "bearer",
+  description: "Enter your JWT token in the format: Bearer <token>",
+});
 
 authRoute.openapi(
   {
@@ -127,6 +134,33 @@ authRoute.openapi(
     } catch (error) {
       console.log(error);
       return c.json("Failed login, wrong email / password", 401);
+    }
+  },
+);
+
+authRoute.openapi(
+  {
+    path: "/me",
+    method: "get",
+    tags: tags,
+    middleware: checkAuthMiddleware,
+    responses: {
+      201: {
+        description: "Success created new user",
+        content: { "application/json": { schema: UserSchema } },
+      },
+      400: { description: "Failed register new user" },
+      409: { description: "Email or username have been used" },
+    },
+  },
+  async (c) => {
+    try {
+      const user = c.get("user");
+
+      return c.json(user, 200);
+    } catch (error) {
+      console.log(error);
+      return c.json("Failed to register user", 400);
     }
   },
 );
