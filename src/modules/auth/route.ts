@@ -8,6 +8,7 @@ import { UserSchema } from "../users/schema-type";
 import { hashPassword, verifyPassword } from "../../lib/hash";
 import { prisma } from "../../lib/prisma";
 import { Prisma } from "../../generated/prisma/client";
+import { signToken } from "../../lib/token";
 
 export const authRoute = new OpenAPIHono();
 
@@ -109,9 +110,11 @@ authRoute.openapi(
         return c.json("Failed login. wrong email / password", 401);
       }
 
+      const token = signToken(existingUser);
+
       return c.json(
         {
-          token: "",
+          token: token,
           user: {
             id: existingUser.id,
             username: existingUser.username,
