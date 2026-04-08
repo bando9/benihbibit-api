@@ -27,7 +27,10 @@ authRoute.openapi(
     method: "post",
     tags: tags,
     request: {
-      body: { content: { "application/json": { schema: RegisterUserSchema } } },
+      body: {
+        content: { "application/json": { schema: RegisterUserSchema } },
+        required: true,
+      },
     },
     responses: {
       201: {
