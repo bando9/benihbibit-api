@@ -62,9 +62,9 @@ authRoute.openapi(
 
       return c.json(newUser, 201);
     } catch (error) {
-      console.log(error);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === "P2002") {
+          console.error("email or username already in use");
           return c.json("email or username already in use", 409);
         }
       }
