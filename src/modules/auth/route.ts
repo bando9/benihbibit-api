@@ -65,10 +65,13 @@ authRoute.openapi(
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === "P2002") {
           console.error("email or username already in use");
-          return c.json("email or username already in use", 409);
+          return c.json(
+            { message: "email or username already in use", error },
+            409,
+          );
         }
       }
-      return c.json("Failed to register user", 400);
+      return c.json({ message: "Failed to register user", error }, 400);
     }
   },
 );
@@ -108,7 +111,7 @@ authRoute.openapi(
         existingUser?.email !== validatedBody.email ||
         !existingUser?.password
       ) {
-        return c.json("Failed login. wrong email / password", 401);
+        return c.json({ message: "Failed login. wrong email / password" }, 401);
       }
 
       const isPasswordVerified = await verifyPassword(
@@ -117,7 +120,7 @@ authRoute.openapi(
       );
 
       if (!isPasswordVerified) {
-        return c.json("Failed login. wrong email / password", 401);
+        return c.json({ message: "Failed login. wrong email / password" }, 401);
       }
 
       const token = signToken(existingUser);
@@ -136,7 +139,10 @@ authRoute.openapi(
       );
     } catch (error) {
       console.log(error);
-      return c.json("Failed login, wrong email / password", 401);
+      return c.json(
+        { message: "Failed login, wrong email / password", error },
+        401,
+      );
     }
   },
 );
