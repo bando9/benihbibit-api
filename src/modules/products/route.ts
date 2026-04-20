@@ -52,6 +52,7 @@ productRoute.openapi(
       maxPrice = 1000000000,
       sortBy = "createdAt",
       sortOrder = "desc",
+      q,
     } = c.req.valid("query");
 
     const whereCondition: any = {};
@@ -64,6 +65,16 @@ productRoute.openapi(
       if (maxPrice !== undefined) {
         whereCondition.price.lte = maxPrice;
       }
+    }
+
+    if (q && q.trim() !== "") {
+      const searchQuery = q.trim();
+
+      whereCondition.OR = [
+        { name: { contains: searchQuery, mode: "insensitive" } },
+        { description: { contains: searchQuery, mode: "insensitive" } },
+        { sku: { contains: searchQuery, mode: "insensitive" } },
+      ];
     }
 
     const skip = (page - 1) * pageSize;
@@ -86,51 +97,6 @@ productRoute.openapi(
       "x-page-size": pageSize.toString(),
       "x-total-pages": totalPages.toString(),
     });
-  },
-);
-
-// Search
-productRoute.openapi(
-  {
-    path: "/search",
-    method: "get",
-    request: {
-      query: SearchQuerySchema,
-    },
-    tags,
-    description: "Search product by name or sku",
-    responses: {
-      200: {
-        description: "Success get query search",
-      },
-    },
-  },
-  async (c) => {
-    const { q } = c.req.valid("query");
-    const searchProduct = await prisma.product.findMany({
-      where: {
-        OR: [
-          {
-            name: {
-              contains: q,
-              mode: "insensitive",
-            },
-          },
-          {
-            sku: {
-              contains: q,
-              mode: "insensitive",
-            },
-          },
-        ],
-      },
-    });
-
-    if (!searchProduct || searchProduct.length === 0) {
-      return c.json("Product not found", 404);
-    }
-
-    return c.json(searchProduct, 200);
   },
 );
 
