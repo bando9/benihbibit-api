@@ -43,6 +43,7 @@ export const ProductQuerySchema = z.object({
     .enum(["createdAt", "price", "name"])
     .optional()
     .default("createdAt"),
+  q: z.string().optional(),
 });
 
 // Type
