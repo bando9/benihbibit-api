@@ -14,7 +14,11 @@ app.use(logger());
 app.use(
   "*",
   cors({
-    origin: ["http://localhost:5173", "http://benihbibit.bandomega.com"],
+    origin: [
+      "http://localhost:5173",
+      "http://benihbibit.bandomega.com",
+      "https://benihbibit.bandomega.com",
+    ],
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     exposeHeaders: ["x-total", "x-page", "x-page-size", "x-total-pages"],
   }),
