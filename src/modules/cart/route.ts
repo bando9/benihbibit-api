@@ -1,5 +1,5 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { CartSchema } from "./schema";
+import { AddItemSchema, CartItemSchema, CartSchema } from "./schema";
 import { checkAuthMiddleware } from "../auth/middleware";
 import { prisma } from "../../lib/prisma";
 
@@ -48,3 +48,52 @@ cartRoute.openapi(
     }
   },
 );
+
+cartRoute.openapi(
+  {
+    path: "/items",
+    method: "put",
+    middleware: checkAuthMiddleware,
+    tags,
+    request: {
+      body: { content: { "application/json": { schema: AddItemSchema } } },
+    },
+    responses: {
+      200: {
+        description: "update items",
+        content: { "application/json": { schema: CartItemSchema } },
+      },
+      404: { description: "items empty" },
+    },
+  },
+  async (c) => {
+    try {
+      const user = c.get("user");
+      const body = c.req.valid("json");
+
+      const cart = await prisma.cart.findUnique({
+        where: { userId: user.id },
+        include: { items: { include: { product: true } } },
+      });
+
+      if (!cart) {
+        return c.notFound();
+      }
+
+      const newCartItem = await prisma.cartItem.create({
+        data: {
+          cartId: cart.id,
+          productId: body.productId,
+          quantity: body.quantity,
+        },
+      });
+
+      return c.json(newCartItem);
+    } catch (error) {
+      console.log(error);
+      return c.json(error);
+    }
+  },
+);
+
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMUtQSjVKUVlZRTk2NVpZM1NTNFg0MUgyUyIsImlhdCI6MTc3NzA4ODY3MywiZXhwIjoxNzc3NjkzNDczfQ.qIB-7YqM8EpGn3fXifpNFKuGpVG6LuLiX1dMGI0WP_c
