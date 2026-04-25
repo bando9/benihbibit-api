@@ -6,6 +6,7 @@ import { helloRoute } from "./modules/common/route";
 import { productRoute } from "./modules/products/route";
 import { userRoute } from "./modules/users/route";
 import { authRoute } from "./modules/auth/route";
+import { cartRoute } from "./modules/cart/route";
 
 const app = new OpenAPIHono();
 
@@ -28,7 +29,8 @@ export const appRoutes = app
   .route("/hello", helloRoute)
   .route("/products", productRoute)
   .route("/users", userRoute)
-  .route("/auth", authRoute);
+  .route("/auth", authRoute)
+  .route("/cart", cartRoute);
 
 // API Docs
 app.doc("/openapi.json", {
