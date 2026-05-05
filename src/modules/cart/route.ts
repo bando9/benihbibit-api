@@ -49,6 +49,7 @@ cartRoute.openapi(
   },
 );
 
+// PUT : update items
 cartRoute.openapi(
   {
     path: "/items",
@@ -96,4 +97,51 @@ cartRoute.openapi(
   },
 );
 
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMUtQSjVKUVlZRTk2NVpZM1NTNFg0MUgyUyIsImlhdCI6MTc3NzA4ODY3MywiZXhwIjoxNzc3NjkzNDczfQ.qIB-7YqM8EpGn3fXifpNFKuGpVG6LuLiX1dMGI0WP_c
+// POST items for add button
+cartRoute.openapi(
+  {
+    path: "/items",
+    method: "post",
+    middleware: checkAuthMiddleware,
+    tags,
+    request: {
+      body: { content: { "application/json": { schema: AddItemSchema } } },
+    },
+    responses: {
+      200: { description: "Success add product" },
+      400: { description: "Failed" },
+    },
+  },
+  async (c) => {
+    const user = c.get("user");
+    const body = c.req.valid("json");
+
+    const cart = await prisma.cart.findUnique({
+      where: { userId: user.id },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+    if (!cart) {
+      return c.notFound();
+    }
+
+    const cartItem = await prisma.cartItem.upsert({
+      where: {
+        id: cart.id,
+      },
+      update: { quantity: { increment: body.quantity } },
+      create: {
+        cartId: cart.id,
+        productId: body.productId,
+        quantity: body.quantity,
+      },
+    });
+
+    return c.json(cartItem, 200);
+  },
+);
