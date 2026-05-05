@@ -1,5 +1,10 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { AddItemSchema, CartItemSchema, CartSchema } from "./schema";
+import {
+  AddItemSchema,
+  CartItemSchema,
+  CartSchema,
+  DeleteItemParamsSchema,
+} from "./schema";
 import { checkAuthMiddleware } from "../auth/middleware";
 import { prisma } from "../../lib/prisma";
 
@@ -7,6 +12,7 @@ const tags = ["cart"];
 
 export const cartRoute = new OpenAPIHono();
 
+// GET
 cartRoute.openapi(
   {
     path: "/",
@@ -49,7 +55,57 @@ cartRoute.openapi(
   },
 );
 
-// PUT : update items
+// POST items for add button
+cartRoute.openapi(
+  {
+    path: "/items",
+    method: "post",
+    middleware: checkAuthMiddleware,
+    tags,
+    request: {
+      body: { content: { "application/json": { schema: AddItemSchema } } },
+    },
+    responses: {
+      200: { description: "Success add product" },
+      400: { description: "Failed" },
+    },
+  },
+  async (c) => {
+    const user = c.get("user");
+    const body = c.req.valid("json");
+
+    const cart = await prisma.cart.findUnique({
+      where: { userId: user.id },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+
+    if (!cart) {
+      return c.notFound();
+    }
+
+    const cartItem = await prisma.cartItem.upsert({
+      where: {
+        uniqueCartItem: { cartId: cart.id, productId: body.productId },
+      },
+      update: { quantity: { increment: body.quantity } },
+      create: {
+        cartId: cart.id,
+        productId: body.productId,
+        quantity: body.quantity,
+      },
+    });
+
+    return c.json(cartItem, 200);
+  },
+);
+
+// PUT  update items
 cartRoute.openapi(
   {
     path: "/items",
@@ -81,15 +137,19 @@ cartRoute.openapi(
         return c.notFound();
       }
 
-      const newCartItem = await prisma.cartItem.create({
-        data: {
+      const cartItem = await prisma.cartItem.upsert({
+        where: {
+          uniqueCartItem: { cartId: cart.id, productId: body.productId },
+        },
+        update: { quantity: body.quantity },
+        create: {
           cartId: cart.id,
           productId: body.productId,
           quantity: body.quantity,
         },
       });
 
-      return c.json(newCartItem);
+      return c.json(cartItem);
     } catch (error) {
       console.log(error);
       return c.json(error);
@@ -97,51 +157,41 @@ cartRoute.openapi(
   },
 );
 
-// POST items for add button
+// DELETE by productId
 cartRoute.openapi(
   {
-    path: "/items",
-    method: "post",
+    path: "/items/{productId}",
+    method: "delete",
     middleware: checkAuthMiddleware,
     tags,
     request: {
-      body: { content: { "application/json": { schema: AddItemSchema } } },
+      params: DeleteItemParamsSchema,
     },
     responses: {
-      200: { description: "Success add product" },
-      400: { description: "Failed" },
+      200: { description: "Success delete item" },
     },
   },
   async (c) => {
     const user = c.get("user");
-    const body = c.req.valid("json");
+    const { productId } = c.req.valid("param");
 
     const cart = await prisma.cart.findUnique({
       where: { userId: user.id },
-      include: {
-        items: {
-          include: {
-            product: true,
-          },
-        },
-      },
     });
+
     if (!cart) {
       return c.notFound();
     }
 
-    const cartItem = await prisma.cartItem.upsert({
+    const deleteCartItem = await prisma.cartItem.delete({
       where: {
-        id: cart.id,
-      },
-      update: { quantity: { increment: body.quantity } },
-      create: {
-        cartId: cart.id,
-        productId: body.productId,
-        quantity: body.quantity,
+        uniqueCartItem: { cartId: cart.id, productId: productId },
       },
     });
 
-    return c.json(cartItem, 200);
+    return c.json(
+      { message: "success delete item", result: deleteCartItem },
+      200,
+    );
   },
 );

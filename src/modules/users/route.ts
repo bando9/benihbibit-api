@@ -31,8 +31,8 @@ userRoute.openapi(
       omit: { email: true },
     });
 
-    if (!users) {
-      return c.json("User not registered yet", 401);
+    if (!users || []) {
+      return c.json("No users registered yet", 401);
     }
 
     return c.json(users, 200);
@@ -53,7 +53,7 @@ userRoute.openapi(
         content: { "application/json": { schema: PublicUserSchema } },
         description: "Success get one user",
       },
-      400: {
+      401: {
         description: "User not registered yet",
       },
     },
@@ -66,7 +66,7 @@ userRoute.openapi(
     });
 
     if (!user) {
-      return c.json("User not registered yet", 400);
+      return c.json("User not registered yet", 401);
     }
 
     return c.json(user, 200);

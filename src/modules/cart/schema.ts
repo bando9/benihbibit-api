@@ -29,3 +29,7 @@ export const AddItemSchema = z.object({
   productId: z.string(),
   quantity: z.number().int(),
 });
+
+export const DeleteItemParamsSchema = z.object({
+  productId: z.string(),
+});
