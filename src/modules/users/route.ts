@@ -31,7 +31,7 @@ userRoute.openapi(
       omit: { email: true },
     });
 
-    if (!users || []) {
+    if (!users || users.length == 0) {
       return c.json("No users registered yet", 401);
     }
 
