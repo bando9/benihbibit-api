@@ -36,7 +36,12 @@ cartRoute.openapi(
 
       const cart = await prisma.cart.findUnique({
         where: { userId: user.id },
-        include: { items: { include: { product: true } } },
+        include: {
+          items: {
+            include: { product: true },
+            orderBy: { createdAt: "desc" },
+          },
+        },
       });
 
       if (!cart) {
@@ -78,9 +83,8 @@ cartRoute.openapi(
       where: { userId: user.id },
       include: {
         items: {
-          include: {
-            product: true,
-          },
+          include: { product: true },
+          orderBy: { createdAt: "asc" },
         },
       },
     });
@@ -130,7 +134,12 @@ cartRoute.openapi(
 
       const cart = await prisma.cart.findUnique({
         where: { userId: user.id },
-        include: { items: { include: { product: true } } },
+        include: {
+          items: {
+            include: { product: true },
+            orderBy: { createdAt: "asc" },
+          },
+        },
       });
 
       if (!cart) {
@@ -177,6 +186,12 @@ cartRoute.openapi(
 
     const cart = await prisma.cart.findUnique({
       where: { userId: user.id },
+      include: {
+        items: {
+          include: { product: true },
+          orderBy: { createdAt: "asc" },
+        },
+      },
     });
 
     if (!cart) {
@@ -189,9 +204,6 @@ cartRoute.openapi(
       },
     });
 
-    return c.json(
-      { message: "success delete item", result: deleteCartItem },
-      200,
-    );
+    return c.json({ message: "success delete item", result: cart }, 200);
   },
 );
