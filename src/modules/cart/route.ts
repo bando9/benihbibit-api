@@ -165,6 +165,12 @@ cartRoute.openapi(
       const user = c.get("user");
       const body = c.req.valid("json");
 
+      const product = await prisma.product.findUnique({
+        where: { id: body.productId },
+      });
+
+      if (!product) return c.json("product not found", 404);
+
       const cart = await prisma.cart.findUnique({
         where: { userId: user.id },
         include: {
@@ -179,11 +185,28 @@ cartRoute.openapi(
         return c.notFound();
       }
 
+      const existingItem = cart.items.find(
+        (item) => item.productId === body.productId,
+      );
+
+      const currentQuantityItem = existingItem ? existingItem.quantity : 0;
+
+      const totalRequestQuantity = currentQuantityItem + body.quantity;
+
+      if (totalRequestQuantity > product.stockQuantity) {
+        return c.json(
+          `out of stock, stock ${product.name}: ${product.stockQuantity}`,
+          400,
+        );
+      }
+
+      const subTotalPrice = product.price * body.quantity;
+
       const cartItem = await prisma.cartItem.upsert({
         where: {
           uniqueCartItem: { cartId: cart.id, productId: body.productId },
         },
-        update: { quantity: body.quantity },
+        update: { quantity: body.quantity, subTotalPrice: subTotalPrice },
         create: {
           cartId: cart.id,
           productId: body.productId,
@@ -191,10 +214,10 @@ cartRoute.openapi(
         },
       });
 
-      return c.json(cartItem);
+      return c.json(cartItem, 200);
     } catch (error) {
       console.log(error);
-      return c.json(error);
+      return c.json(error, 400);
     }
   },
 );

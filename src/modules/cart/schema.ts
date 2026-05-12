@@ -8,6 +8,7 @@ export const CartItemSchema = z.object({
   productId: z.string(),
 
   quantity: z.number().int(),
+  subTotalPrice: z.number().int(),
 
   createdAt: z.date(),
   updatedAt: z.date(),
@@ -20,6 +21,7 @@ export const CartSchema = z.object({
 
   userId: z.string(),
   items: CartItemsSchema,
+  totalPrice: z.number().int(),
 
   createdAt: z.date(),
   updatedAt: z.date(),
