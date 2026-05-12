@@ -73,39 +73,72 @@ cartRoute.openapi(
     responses: {
       200: { description: "Success add product" },
       400: { description: "Failed" },
+      404: { description: "not found" },
     },
   },
   async (c) => {
-    const user = c.get("user");
-    const body = c.req.valid("json");
+    try {
+      const user = c.get("user");
+      const body = c.req.valid("json");
 
-    const cart = await prisma.cart.findUnique({
-      where: { userId: user.id },
-      include: {
-        items: {
-          include: { product: true },
-          orderBy: { createdAt: "asc" },
+      const product = await prisma.product.findUnique({
+        where: { id: body.productId },
+      });
+
+      if (!product) return c.json("product not found", 404);
+
+      const cart = await prisma.cart.findUnique({
+        where: { userId: user.id },
+        include: {
+          items: {
+            include: { product: true },
+            orderBy: { createdAt: "asc" },
+          },
         },
-      },
-    });
+      });
 
-    if (!cart) {
-      return c.notFound();
+      if (!cart) {
+        return c.notFound();
+      }
+
+      const existingItem = cart.items.find(
+        (item) => item.productId === body.productId,
+      );
+
+      const currentQuantityItem = existingItem ? existingItem.quantity : 0;
+
+      const totalRequestQuantity = currentQuantityItem + body.quantity;
+
+      if (totalRequestQuantity > product.stockQuantity) {
+        return c.json(
+          `out of stock, stock ${product.name}: ${product.stockQuantity}`,
+          400,
+        );
+      }
+
+      const subTotalPrice = product.price * body.quantity;
+
+      const cartItem = await prisma.cartItem.upsert({
+        where: {
+          uniqueCartItem: { cartId: cart.id, productId: body.productId },
+        },
+        update: {
+          quantity: { increment: body.quantity },
+          subTotalPrice: { increment: subTotalPrice },
+        },
+        create: {
+          cartId: cart.id,
+          productId: body.productId,
+          quantity: body.quantity,
+          subTotalPrice: subTotalPrice,
+        },
+      });
+
+      return c.json(cartItem, 200);
+    } catch (error) {
+      console.log(error);
+      return c.json("failed", 400);
     }
-
-    const cartItem = await prisma.cartItem.upsert({
-      where: {
-        uniqueCartItem: { cartId: cart.id, productId: body.productId },
-      },
-      update: { quantity: { increment: body.quantity } },
-      create: {
-        cartId: cart.id,
-        productId: body.productId,
-        quantity: body.quantity,
-      },
-    });
-
-    return c.json(cartItem, 200);
   },
 );
 
