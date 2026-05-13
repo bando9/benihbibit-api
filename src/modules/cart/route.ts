@@ -25,8 +25,8 @@ cartRoute.openapi(
         description: "Get user's cart",
         content: { "application/json": { schema: CartSchema } },
       },
-      404: {
-        description: "cart user not found",
+      500: {
+        description: "Internal server error",
       },
     },
   },
@@ -52,10 +52,23 @@ cartRoute.openapi(
         return c.json(newCart, 201);
       }
 
-      return c.json(cart, 200);
+      const grandTotalPrice = cart.items.reduce((total, item) => {
+        return total + item.subTotalPrice;
+      }, 0);
+
+      const cartResponse = {
+        id: cart.id,
+        createdAt: cart.createdAt,
+        updatedAt: cart.updatedAt,
+        userId: cart.userId,
+        totalPrice: grandTotalPrice,
+        items: cart.items,
+      };
+
+      return c.json(cartResponse, 200);
     } catch (error) {
       console.log(error);
-      return c.json("cart user not found", 404);
+      return c.json("Internal server error", 500);
     }
   },
 );
