@@ -198,15 +198,9 @@ cartRoute.openapi(
         return c.notFound();
       }
 
-      const existingItem = cart.items.find(
-        (item) => item.productId === body.productId,
-      );
+      const totalQuantity = body.quantity;
 
-      const currentQuantityItem = existingItem ? existingItem.quantity : 0;
-
-      const totalRequestQuantity = currentQuantityItem + body.quantity;
-
-      if (totalRequestQuantity > product.stockQuantity) {
+      if (totalQuantity > product.stockQuantity) {
         return c.json(
           `out of stock, stock ${product.name}: ${product.stockQuantity}`,
           400,
@@ -224,6 +218,7 @@ cartRoute.openapi(
           cartId: cart.id,
           productId: body.productId,
           quantity: body.quantity,
+          subTotalPrice: subTotalPrice,
         },
       });
 
